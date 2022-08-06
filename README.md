@@ -2,9 +2,7 @@
 
 This is a puzzle game 2048.
 
-> Note:<br><br>
-> *__Author:__ `Dulan Sudasinghe`*<br>
-> *__Date:__ August 6, 2022*
+> Note:<br><br> > _**Author:** `Dulan Sudasinghe`_<br> > _**Date:** August 6, 2022_
 
 ## Status
 
@@ -17,6 +15,7 @@ This is a puzzle game 2048.
 2. Run `yarn start` to dev mode.
 3. Run `yarn build` to build production.
 4. Run `yarn serve` to serve after `yarn build` and follow the instructions to host in local machine.
+5. To run the code on online follow this link [puzzle-2048](https://skycodr.github.io/puzzle-2048/)
 
 ## To-do
 
@@ -31,4 +30,3 @@ This is a puzzle game 2048.
 3. Animation
 4. Better UI
 5. Select control scheme
-
