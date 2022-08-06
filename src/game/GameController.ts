@@ -17,7 +17,7 @@ const { trn } = MatrixResolver(4);
 const GameController: IGameController = (surface, options) => {
   let tiles: Matrix;
 
-  const board = BoardRenderer(surface, options as DrawableOptions);
+  const { draw  } = BoardRenderer(surface, options as DrawableOptions);
 
   const { setRandomDigits, processTiles, didWin, hasMoves } = LogicController();
 
@@ -35,7 +35,7 @@ const GameController: IGameController = (surface, options) => {
 
       setRandomDigits(tiles, 2);
 
-      board.draw(tiles);
+      draw(tiles);
     },
     /**
      * Call upon key press to evaluate logic
@@ -55,13 +55,13 @@ const GameController: IGameController = (surface, options) => {
 
       setRandomDigits(tiles);
 
-      board.draw(tiles);
+      draw(tiles);
     },
 
     /**
      * Retrieve the game state
      *
-     * Pass a winning number to didWin  to see the result
+     * Pass a winning number to didWin  to see the result for a short game
      *
      * E.g:- didWin(tiles, 256)
      *

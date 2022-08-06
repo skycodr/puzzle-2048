@@ -28,9 +28,7 @@ const useKeyboardController = (
       if (gameState !== PLAYING) return;
 
       const key = event.key as ControlSchemes;
-      if (!!inputScheme[key]) {
-        onKeyPress?.(inputScheme[key]);
-      }
+      !!inputScheme[key] && onKeyPress?.(inputScheme[key]);
     },
     [gameState, inputScheme, onKeyPress]
   );

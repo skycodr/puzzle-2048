@@ -28,10 +28,7 @@ const useGameController = () => {
   }, []);
 
   useEffect(() => {
-    if (controller) {
-      const { init } = controller;
-      init();
-    }
+    controller?.init();
   }, [controller]);
 
   return {

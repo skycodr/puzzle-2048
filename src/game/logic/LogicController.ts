@@ -102,7 +102,9 @@ const LogicController = () => {
 
     for (let i = 0; i < length; i++) {
       const [col, row] = l2m(i);
-      if (tiles[row][col] === 0) indices.push(i);
+      if (tiles[row][col] === 0) {
+        indices.push(i);
+      }
     }
 
     return indices;
