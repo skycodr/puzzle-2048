@@ -22,6 +22,7 @@ This is a puzzle game 2048.
 1. Optimize `matrix` structure to linear array.
 2. Optimize `matrix.transform` function.
 3. `Dependency invert`, Debug options.
+4. Add new game and restart game feature
 
 ## Future development
 
