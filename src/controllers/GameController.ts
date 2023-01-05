@@ -1,7 +1,6 @@
 import { DIRECTIONS, LOSS, PLAYING, WON } from "../fixtures";
+import { GameBoard } from "../structs";
 import { MatrixResolver } from "../utils";
-import { LogicController } from "./logic";
-import { BoardRenderer } from "./structs";
 
 const { trn } = MatrixResolver(4);
 
@@ -10,16 +9,16 @@ const { trn } = MatrixResolver(4);
  * ported to vanilla javascript projects.
  *
  * @param surface A canvas context
- * @param setGameState A method to set the game state. This will change in the future.
  * @param options Options to be passed to the board. May bel this can change for more Dependency Inversion features
  * @returns
  */
-const GameController: IGameController = (surface, options) => {
+const GameController: TGameController = (surface, options, controllers) => {
   let tiles: Matrix;
 
-  const { draw  } = BoardRenderer(surface, options as DrawableOptions);
+  const { draw } = GameBoard(surface, options as DrawableOptions);
+  const { logicController } = controllers;
 
-  const { setRandomDigits, processTiles, didWin, hasMoves } = LogicController();
+  const { setRandomDigits, processTiles, didWin, hasMoves } = logicController;
 
   return {
     /**

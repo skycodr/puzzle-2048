@@ -1,9 +1,10 @@
-import { MatrixResolver } from "../../utils";
+import { MatrixResolver } from "../utils";
 import {
+  IIndexRenderer,
   ITextRenderer,
-  ITileShapeRenderer
+  ITileShapeRenderer,
 } from "../renderers";
-import TileRenderer from "./TileRenderer";
+import GameTile from "./GameTile";
 
 const { l2m } = MatrixResolver(4);
 /**
@@ -14,27 +15,26 @@ const { l2m } = MatrixResolver(4);
  * @param options Board options
  * @returns
  */
-const BoardRenderer: IBoardRenderer = (surface, options) => {
+const GameBoard: Board = (surface, options) => {
   const {
     id,
     size: [w, h],
     padding,
   } = options;
 
-  const tiles: IDrawable<number>[] = [];
+  const tiles: Drawable<number>[] = [];
   const tileWidth = w >> 2;
   const tileHeight = h >> 2;
 
   const renderers: TileSubRenderers = {
     shapeRenderer: ITileShapeRenderer(surface) as ITileShapeRenderer,
     textRenderer: ITextRenderer(surface) as ITextRenderer,
-    // Todo: May be with debugging options, this can be added.
-    // indexRenderer: IIndexRenderer(surface) as IIndexRenderer,
+    indexRenderer: IIndexRenderer(surface) as IIndexRenderer,
   };
 
   for (let i = 0; i < 16; i++) {
     tiles.push(
-      TileRenderer({ id: i, size: [tileWidth, tileHeight], padding }, renderers)
+      GameTile({ id: i, size: [tileWidth, tileHeight], padding }, renderers)
     );
   }
 
@@ -50,4 +50,4 @@ const BoardRenderer: IBoardRenderer = (surface, options) => {
   };
 };
 
-export default BoardRenderer;
+export default GameBoard;

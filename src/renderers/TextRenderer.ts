@@ -1,4 +1,4 @@
-import { FONT_SIZES } from "../../fixtures";
+import { FONT_SIZES } from "../fixtures";
 
 const defaultOptions: TextRenderOptions = { renderZeros: false };
 

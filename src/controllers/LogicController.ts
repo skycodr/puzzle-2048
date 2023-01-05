@@ -1,5 +1,5 @@
-import { FORWARD } from "../../fixtures";
-import { MatrixResolver, Numbers, VectorResolver } from "../../utils";
+import { FORWARD } from "../fixtures";
+import { MatrixResolver, Numbers, VectorResolver } from "../utils";
 
 const { l2m } = MatrixResolver(4);
 const { add } = VectorResolver;
@@ -10,14 +10,14 @@ const { randomRange } = Numbers;
  *
  * @returns
  */
-const LogicController = () => {
+const LogicController: TLogicController = () => {
   /**
    * Slides a sector of tiles in an array depending on the direction
    *
    * @param tileSector {number[]} A sector of tiles in the matrix
    * @param direction {number} Direction FORWARD or REVERSE
    */
-  const slideTiles = (tileSector: number[], direction = FORWARD) => {
+  const slide = (tileSector: number[], direction: number = FORWARD) => {
     let startTileId = 0;
     let endTileId = tileSector.length - 1;
 
@@ -58,7 +58,7 @@ const LogicController = () => {
    * @param a {number} Index 1
    * @param b {number} Index 2
    */
-  const mergeTiles = (tileSector: number[], a: number, b: number) => {
+  const merge = (tileSector: number[], a: number, b: number) => {
     if (tileSector[a] === tileSector[b]) {
       tileSector[a] += tileSector[b];
       tileSector[b] = 0;
@@ -71,7 +71,7 @@ const LogicController = () => {
    * @param tileSector {number[]} Array sector to be processed
    * @param direction {number}
    */
-  const processTiles = (tileSector: number[], direction = FORWARD) => {
+  const evaluate = (tileSector: number[], direction: number = FORWARD) => {
     let startIndex = 0,
       endIndex = tileSector.length - 1;
     if (direction === FORWARD) {
@@ -83,9 +83,9 @@ const LogicController = () => {
     let lastProcessId = endIndex + direction;
 
     do {
-      slideTiles(tileSector, direction);
-      mergeTiles(tileSector, firstProcessId, firstProcessId + direction);
-      slideTiles(tileSector, direction);
+      slide(tileSector, direction);
+      merge(tileSector, firstProcessId, firstProcessId + direction);
+      slide(tileSector, direction);
       firstProcessId += direction;
     } while (firstProcessId !== lastProcessId);
   };
@@ -96,7 +96,7 @@ const LogicController = () => {
    * @param tiles {number[][]} The value matrix
    * @returns
    */
-  const getEmptyTileIndices = (tiles: Matrix) => {
+  const findEmpty = (tiles: Matrix) => {
     const indices = [];
     const length = tiles.length * tiles[0].length;
 
@@ -118,7 +118,7 @@ const LogicController = () => {
    * @param indices
    * @returns
    */
-  const getRandomIndices = (
+  const findRandomIndices = (
     emptyTiles: number[],
     count: number,
     indices: number[] = []
@@ -129,7 +129,7 @@ const LogicController = () => {
       const i = randomRange(0, emptyTiles.length - 1);
       indices.push(emptyTiles[i]);
       emptyTiles.splice(i, 1);
-      getRandomIndices(emptyTiles, count, indices);
+      findRandomIndices(emptyTiles, count, indices);
     }
 
     return indices;
@@ -143,7 +143,7 @@ const LogicController = () => {
    * @param count {number} No of tiles to be populated with a random value
    */
   const setRandomDigits = (tiles: Matrix, count: number = 1) => {
-    const indices = getRandomIndices(getEmptyTileIndices(tiles), count);
+    const indices = findRandomIndices(findEmpty(tiles), count);
     for (let i = 0; i < indices.length; i++) {
       const [col, row] = l2m(indices[i]);
       tiles[row][col] = randomRange(0, 10) > 9 ? 4 : 2;
@@ -177,7 +177,7 @@ const LogicController = () => {
    * @returns
    */
   const hasMoves = (tiles: Matrix) => {
-    const adjOffsets: Vector[] = [
+    const adjOffsets: Point[] = [
       [-1, 0],
       [0, 1],
       [1, 0],
@@ -214,7 +214,7 @@ const LogicController = () => {
   return {
     didWin,
     hasMoves,
-    processTiles,
+    processTiles: evaluate,
     setRandomDigits,
   };
 };

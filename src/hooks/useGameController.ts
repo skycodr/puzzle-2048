@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { GameContext } from "../contexts";
-import { GameController } from "../game";
+import { LogicController, GameController } from "../controllers";
 /**
  * Hook for the handling the game.
  * Todo: May be options can be DI ed.
@@ -15,7 +15,7 @@ import { GameController } from "../game";
  */
 const useGameController = () => {
   const [controller, setController] =
-    useState<ReturnType<IGameController> | null>(null);
+    useState<ReturnType<TGameController> | null>(null);
 
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -24,7 +24,13 @@ const useGameController = () => {
   useLayoutEffect(() => {
     const surface = ref.current?.getContext("2d");
     surface &&
-      setController(GameController(surface, { size: [480, 480], padding: 8 }));
+      setController(
+        GameController(
+          surface,
+          { size: [480, 480], padding: 8 },
+          { logicController: LogicController() }
+        )
+      );
   }, []);
 
   useEffect(() => {

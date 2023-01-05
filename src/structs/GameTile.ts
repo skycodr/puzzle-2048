@@ -1,5 +1,5 @@
-import { TILE_COLORS } from "../../fixtures";
-import { MatrixResolver, VectorResolver } from "../../utils";
+import { TILE_COLORS } from "../fixtures";
+import { MatrixResolver, VectorResolver } from "../utils";
 
 const { l2m } = MatrixResolver(4);
 const { add, mul, sub } = VectorResolver;
@@ -11,7 +11,7 @@ const { add, mul, sub } = VectorResolver;
  * @param renderers Sub renders
  * @returns 
  */
-const TileRenderer: ITileRenderer = (options, renderers) => {
+const GameTile: Tile = (options, renderers) => {
   const { id, size, padding } = options;
   const { shapeRenderer, textRenderer, indexRenderer } = renderers;
 
@@ -34,4 +34,4 @@ const TileRenderer: ITileRenderer = (options, renderers) => {
   };
 };
 
-export default TileRenderer;
+export default GameTile;
